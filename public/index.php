@@ -9,7 +9,7 @@ $app = new \Slim\App;
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "librarydb";
+$dbname = "library";
 
 // Function to generate a new access token
 function generateAccessToken() {
