@@ -339,7 +339,7 @@ If an error occurs, the response will have the following format:
 ```
 
 ## CREATED BY:
-JOSE ANGELO C YARANON / BS INFOTECT 4C
+JOSE ANGELO C. YARANON / BS INFOTECH 4C
 
 
 
