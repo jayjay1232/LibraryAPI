@@ -227,9 +227,10 @@ Welcome to the Library API! This API provides a suite of endpoints that allow yo
 ### Payload
 ```bash
 {
-  "title": "new_booktitle,
+  "title": "new_booktitle",
   "author_id": "4",
   "token": "your_token"
+}
 }
 
 ```
