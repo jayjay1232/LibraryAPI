@@ -335,71 +335,17 @@ $app->delete('/user/delete/{id}', function (Request $request, Response $response
     return $response;
 })->add('validateToken');
 
-// Add a new relation (e.g., book to author)
-$app->post('/relations', function (Request $request, Response $response) {
-    $data = json_decode($request->getBody(), true);
-    $book_id = $data['book_id'];
-    $author_id = $data['author_id'];
 
+// Get All Book-Author Relations
+$app->get('/books_authors/get', function (Request $request, Response $response) {
     $conn = new PDO("mysql:host=localhost;dbname=library", "root", "");
-    $sql = "INSERT INTO book_author_relations (book_id, author_id) VALUES (:book_id, :author_id)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([':book_id' => $book_id, ':author_id' => $author_id]);
-
-    markTokenAsUsed($data['token']);
-    $response = respondWithNewAccessToken($response);
-    $response->getBody()->write(json_encode(["status" => "success", "access_token" => $response->getHeader('New-Access-Token')[0]]));
-    return $response;
-})->add('validateToken');
-
-// Get all relations
-$app->get('/relations', function (Request $request, Response $response) {
-    $conn = new PDO("mysql:host=localhost;dbname=library", "root", "");
-    $sql = "SELECT book_author_relations.*, books.title AS book_title, authors.name AS author_name 
-            FROM book_author_relations 
-            JOIN books ON book_author_relations.book_id = books.id 
-            JOIN authors ON book_author_relations.author_id = authors.authorid";
-    $stmt = $conn->query($sql);
+    $stmt = $conn->query("SELECT * FROM books_authors");
     $relations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    markTokenAsUsed($request->getParsedBody()['token']);
-    $response = respondWithNewAccessToken($response);
     $response->getBody()->write(json_encode(["status" => "success", "data" => $relations]));
     return $response;
 })->add('validateToken');
 
-// Update a relation
-$app->put('/relations/{id}', function (Request $request, Response $response, array $args) {
-    $data = json_decode($request->getBody(), true);
-    $id = $args['id'];
-    $book_id = $data['book_id'];
-    $author_id = $data['author_id'];
-
-    $conn = new PDO("mysql:host=localhost;dbname=library", "root", "");
-    $sql = "UPDATE book_author_relations SET book_id = :book_id, author_id = :author_id WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([':book_id' => $book_id, ':author_id' => $author_id, ':id' => $id]);
-
-    markTokenAsUsed($data['token']);
-    $response = respondWithNewAccessToken($response);
-    $response->getBody()->write(json_encode(["status" => "success"]));
-    return $response;
-})->add('validateToken');
-
-// Delete a relation
-$app->delete('/relations/{id}', function (Request $request, Response $response, array $args) {
-    $id = $args['id'];
-
-    $conn = new PDO("mysql:host=localhost;dbname=library", "root", "");
-    $sql = "DELETE FROM book_author_relations WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([':id' => $id]);
-
-    markTokenAsUsed($request->getParsedBody()['token']);
-    $response = respondWithNewAccessToken($response);
-    $response->getBody()->write(json_encode(["status" => "success"]));
-    return $response;
-})->add('validateToken');
 
 $app->run();
 ?>
