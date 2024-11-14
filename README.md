@@ -4,7 +4,7 @@ Welcome to the Library API! This API provides a suite of endpoints that allow yo
 
 
 ## Key Features
--Secure Access: To ensure the privacy and security of your data, each request to the API requires authentication. Our token-based authentication system issues a unique token upon login, which is used to validate each subsequent request. After the user logs in, they will receive a token which must be included in the header of every request to access the API. This token is validated on each request to ensure that the user is authorized. Additionally, a new token will be issued with every request, and the user should use the most recent token for all subsequent API calls to maintain secure access.
+- Secure Access: To ensure the privacy and security of your data, each request to the API requires authentication. Our token-based authentication system issues a unique token upon login, which is used to validate each subsequent request. After the user logs in, they will receive a token which must be included in the header of every request to access the API. This token is validated on each request to ensure that the user is authorized. Additionally, a new token will be issued with every request, and the user should use the most recent token for all subsequent API calls to maintain secure access.
   
 - CRUD Operations: The API supports full Create, Read, Update, and Delete (CRUD) functionality for managing library resources.
   
@@ -106,7 +106,7 @@ Welcome to the Library API! This API provides a suite of endpoints that allow yo
 ### Payload
 ```bash
 {
-  "name": "your_username,
+  "author": "author_name",
   "token": "your_token"
 }
 ```
